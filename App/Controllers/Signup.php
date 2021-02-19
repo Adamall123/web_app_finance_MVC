@@ -27,9 +27,20 @@ class Signup extends \Core\Controller
 		//echo print_r($_POST);
 		$user = new User($_POST);
 		//validate before saving
-		$user->save();
+		
+		if ($user->save()){
+			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/signup/success', true, 303);
+		} else {
+			View::renderTemplate('Signup/new.html', [
+				'user' => $user
+			]);
+		}
 		//do course and then think about it 
 		//$income->save(userid);??
 		//$expense->save(userid);??
+	}
+	public function successAction()
+	{
+		View::renderTemplate('Signup/success.html');
 	}
 }
