@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block body %}
+
+    <h1>Sign up</h1>
+		
+	<form class="form" method="post" action="/signup/create">
+		<div class="inputfield">
+			<label for="name">Name</label>
+			<input type="text" id="name" name="name" class="input" placeholder="name" />
+		</div>
+		<div class="inputfield">
+			<label for="email">Email Address</label>
+			<input type="text" id="email" name="email" class="input" placeholder="email address" />
+		</div>
+		<div class="inputfield">
+			<label for="inputPassword">Password</label>
+			<input type="password" id="inputPassword" name="password" class="input" placeholder="Password" />
+		</div>
+		<div class="inputfield">
+			<label for="inputPasswordConfirmation">Repeat password</label>
+			<input type="password" id="inputPasswordConfirmation" name="password2" class="input" placeholder="Repeat Password" />
+		</div>
+		
+		<!--<div class="g-recaptcha" data-sitekey="6Lck-z8aAAAAAAvsfLI1iUrgtZyoDIS0FXApfSpb"></div>-->
+		<div class="inputfield btn-warning">
+			<input type="submit" value="Signup" class="btn">
+		</div>
+	</form>
+	
+	
+{% endblock %}
