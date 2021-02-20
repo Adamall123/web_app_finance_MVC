@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+    <h1>Login</h1>
+		<form class="form" method="post" action="/login/create">
+			<div class="inputfield">
+				<label>Email Address</label>
+				<input type="text" name="email" class="input" value= {{ email }}>
+			</div>
+			<div class="inputfield">
+				<label>Password</label>
+				<input type="password" name="password" class="input">
+			</div>
+			<div class="inputfield btn-warning">
+				<input type="submit" value="log-in" class="mainPage btn"  >
+			</div>
+			  <p><a href="/signup/new">Register as a new manager of your finanse</a></p>
+		</form>
+{% endblock %}

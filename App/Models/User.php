@@ -19,7 +19,7 @@ class User extends \Core\Model
 	 */
 	 public $errors = [];
 	
-   public function __construct($data)
+   public function __construct($data = [])
    {
 	   //convert array to object properties
 	   foreach($data as $key => $value){
@@ -33,8 +33,8 @@ class User extends \Core\Model
 		
 		if(empty($this->errors)){
 			$password_hash = password_hash($this->password, PASSWORD_DEFAULT);
-			$sql = 'INSERT INTO users (name, password, email)
-					VALUES(:name, :password, :email)';
+			//add id to our user
+			$sql = 'INSERT INTO users VALUES(NULL, :name, :password, :email)';
 			$db = static::getDB();
 			$stmt = $db->prepare($sql);
 			$stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
@@ -75,13 +75,40 @@ class User extends \Core\Model
    
    public static function emailExists($email)
    {
+	   return static::findByEmail($email) !== false;
+   }
+    
+	/**
+	 * Find a user model by email address
+	 *
+	 * @param string $email email address to search for
+	 *
+	 * @return mixed User objecy if found, false otherwise
+	 */
+	public static function findByEmail($email)
+	{
 	   $sql = 'SELECT * FROM users WHERE email = :email';
 	   
 	   $db = static::getDB();
 	   $stmt = $db->prepare($sql);
 	   $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-	   
+	   $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class()); //the function will give App\Models\Users - when changed it wil updated
+	   // fetch by default returns array we are setting to return class so that we will get object 
+	   // our user class is namespace and we need add that also 
 	   $stmt->execute();
-	   return $stmt->fetch() !== false;
-   }
+	   
+	   return $stmt->fetch();
+	}
+	public static function authenticate($email, $password)
+	{
+		$user = static::findByEmail($email);
+		if($user){
+			if(password_verify($password, $user->password)){
+				return $user;
+			}
+		}
+		return false;
+	}
+		
+	
 }
