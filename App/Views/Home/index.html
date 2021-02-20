@@ -6,7 +6,7 @@
 
     <h1>Hi</h1>
 	
-	{% if session.user_id %}
+	{% if is_logged_in %}
 		User With ID {{ session.user_id }} is logged in.
 		<a href="/logout">Log out</a>
 	{% else %}
