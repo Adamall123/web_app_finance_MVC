@@ -109,6 +109,21 @@ class User extends \Core\Model
 		}
 		return false;
 	}
+	
+	public static function findByID($id)
+	{
+	   $sql = 'SELECT * FROM users WHERE id = :id';
+	   
+	   $db = static::getDB();
+	   $stmt = $db->prepare($sql);
+	   $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+	   $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class()); //the function will give App\Models\Users - when changed it wil updated
+	   // fetch by default returns array we are setting to return class so that we will get object 
+	   // our user class is namespace and we need add that also 
+	   $stmt->execute();
+	   
+	   return $stmt->fetch();
+	}
 		
 	
 }

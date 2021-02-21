@@ -9,7 +9,7 @@ use \App\Auth;
  * PHP version 7.0
  */
  
-class Items extends \Core\Controller
+class Items extends Authenticated
 {
 	/**
 	 * Item index
@@ -18,11 +18,7 @@ class Items extends \Core\Controller
 	 */
 	public function indexAction()
 	{
-		if(! Auth::isLoggedIn()){
-			//exit('access denied');
-			Auth::rememberRequestedPage();
-			$this->redirect('/login');
-		}
+		
 		View::renderTemplate('Items/index.html');
 	}
 }
