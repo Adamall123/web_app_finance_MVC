@@ -14,6 +14,11 @@
 				<label>Password</label>
 				<input type="password" name="password" class="input">
 			</div>
+			<div>
+				<label>
+					<input type="checkbox" name="remember_me" {% if remember_me %} checked="checked" {% endif %}/> Remember me
+				</label>
+			</div>
 			<div class="inputfield btn-warning">
 				<input type="submit" value="log-in" class="mainPage btn"  >
 			</div>
